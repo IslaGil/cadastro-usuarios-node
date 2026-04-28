@@ -4,7 +4,6 @@ const db = require('../database');
 const bcrypt = require('bcrypt');
 
 // CREATE
-// CREATE
 router.post('/', async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -66,6 +65,52 @@ router.get('/', (req, res) => {
 
     res.json(rows);
   });
+});
+
+// DELETE
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.run('DELETE FROM users WHERE id = ?', [id], function (err) {
+    if (err) return res.status(400).json({ error: err.message });
+
+    res.json({ message: 'Usuário removido com sucesso' });
+  });
+});
+
+// UPDATE
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password } = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  db.run(
+    'UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?',
+    [name, email, hashedPassword, id],
+    function (err) {
+      if (err) return res.status(400).json({ error: err.message });
+
+      res.json({ message: 'Usuário atualizado' });
+    }
+  );
+});
+
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password } = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  db.run(
+    'UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?',
+    [name, email, hashedPassword, id],
+    function (err) {
+      if (err) return res.status(400).json({ error: err.message });
+
+      res.json({ message: 'Usuário atualizado com sucesso' });
+    }
+  );
 });
 
 module.exports = router;

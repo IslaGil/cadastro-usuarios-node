@@ -27,11 +27,19 @@ async function loadUsers() {
 
   usersList.innerHTML = '';
 
-  users.forEach(user => {
-    const li = document.createElement('li');
-    li.textContent = `${user.name} - ${user.email}`;
-    usersList.appendChild(li);
-  });
+users.forEach(user => {
+  const li = document.createElement('li');
+
+  li.innerHTML = `
+    ${user.name} - ${user.email}
+    <div>
+      <button onclick="editUser(${user.id}, '${user.name}', '${user.email}')">Editar</button>
+      <button onclick="deleteUser(${user.id})">Excluir</button>
+    </div>
+  `;
+
+  usersList.appendChild(li);
+});
 }
 
 loadUsers();
@@ -54,3 +62,39 @@ loginForm.addEventListener('submit', async (e) => {
 
   alert(data.message || data.error);
 });
+
+async function deleteUser(id) {
+  await fetch(`http://localhost:3000/users/${id}`, {
+    method: 'DELETE'
+  });
+
+  loadUsers();
+}
+
+function editUser(id, name, email) {
+  document.getElementById('name').value = name;
+  document.getElementById('email').value = email;
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const newName = document.getElementById('name').value;
+    const newEmail = document.getElementById('email').value;
+    const newPassword = document.getElementById('password').value;
+
+    await fetch(`http://localhost:3000/users/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: newName,
+        email: newEmail,
+        password: newPassword
+      })
+    });
+
+    form.reset();
+    loadUsers();
+  };
+}

@@ -1,26 +1,41 @@
-<h1>Cadastro de Usuário</h1>
+<body>
 
-<form id="form">
-  <input type="text" id="name" placeholder="Nome" required />
-  <input type="email" id="email" placeholder="Email" required />
-  <input type="password" id="password" placeholder="Senha" required />
+  <div class="container">
 
-  <button type="submit">Cadastrar</button>
-</form>
+    <head>
+      <title>Cadastro</title>
+      <link rel="stylesheet" href="styles.css">
+    </head>
 
-<hr>
+    <h1>👤 Cadastro de Usuários</h1>
 
-<h2>Usuários cadastrados</h2>
-<ul id="users"></ul>
+    <div class="card">
+      <h2>Cadastrar</h2>
+      <form id="form">
+        <input type="text" id="name" placeholder="Nome" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Senha" required />
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
 
-<h2>Login</h2>
+    <div class="card">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required />
+        <input type="password" id="loginPassword" placeholder="Senha" required />
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
 
-<form id="loginForm">
-  <input type="email" id="loginEmail" placeholder="Email" required />
-  <input type="password" id="loginPassword" placeholder="Senha" required />
+    <div class="card">
+      <h2>Usuários</h2>
+      <ul id="users"></ul>
+    </div>
 
-  <button type="submit">Entrar</button>
-</form>
+  </div>
+
+</body>
 
 </body>
 <script src="app.js"></script>
